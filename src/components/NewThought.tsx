@@ -30,8 +30,8 @@ const NewThought = () => {
       setConfetti({ showConfetti: true });
       setNewThought(initialValue);
       setTimeout(() => setConfetti({ showConfetti: false }), 3000);
-    } catch {
-      console.log(isError);
+    } catch (error) {
+      console.log(isError, error);
       alert("Oh no! Something went wrong, please try again");
     }
   };
