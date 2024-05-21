@@ -1,7 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Chewy:wght@400;700&display=swap");
 
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  font-family: "Nunito";
 }
 
 body {
@@ -20,158 +25,6 @@ code {
     monospace;
 }
 
-body,
-h1,
-p,
-label,
-textarea,
-footer {
-  margin: 0;
-  padding: 0;
-  font-family: "Nunito";
-}
-
-h1 {
-  font-family: "Chewy";
-  font-size: 42px;
-  text-transform: uppercase;
-  background: url("https://images.unsplash.com/photo-1550684848-fac1c5b4e853?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2Nzk0ODY5Njg&ixlib=rb-4.0.3&q=80&w=400");
-  background-position: center;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-main {
-  margin: 0 auto;
-  padding: 0;
-  width: 90%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.feedWrapper,
-.newPostWrapper {
-  box-sizing: border-box;
-  background-color: white;
-  margin: 10px;
-  width: 320px;
-  border: 1px solid rgb(56, 56, 56);
-  border-radius: 25px;
-  box-shadow: 3x 3px 0px 1px rgba(56, 56, 56, 0.75);
-  -webkit-box-shadow: 3px 3px 0px 1px rgba(56, 56, 56, 0.75);
-  -moz-box-shadow: 3px 3px 0px 1px rgba(56, 56, 56, 0.75);
-}
-
-/* NEW POST */
-.newPostWrapper {
-  padding: 14px;
-}
-
-.newPostTitle {
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.8;
-}
-
-#newPost {
-  width: 100%;
-}
-
-textarea {
-  padding: 5px;
-  max-width: 315px;
-  background-color: rgb(251, 241, 243);
-  border: none;
-  border-radius: 8px;
-  color: black;
-}
-
-textarea:focus {
-  outline: none;
-  background-color: white;
-  border: 2px solid pink;
-}
-
-.counter,
-.counterTooMany {
-  position: relative;
-  float: right;
-  font-size: 12px;
-}
-
-.counter {
-  color: grey;
-}
-
-.counterTooMany {
-  color: red;
-}
-
-.postBtn {
-  margin-top: 5px;
-  background-color: pink;
-  border-radius: 20px;
-  border: none;
-  padding: 6px 8px;
-  font-family: "Nunito";
-  font-weight: 600;
-  color: white;
-}
-
-/* FEED */
-.feedWrapper {
-  opacity: 0.9;
-  padding: 12px;
-  margin: 10px auto;
-}
-
-.postText {
-  margin: 5px 5px 10px 5px;
-  max-width: 100%;
-  overflow-wrap: break-word;
-  height: auto;
-  font-size: 14px;
-}
-
-.heart {
-  font-size: 12px;
-}
-
-.likesBtn,
-.noLikesBtn {
-  border: none;
-  border-radius: 50%;
-  padding: 5px 6px;
-}
-
-.likesBtn {
-  background-color: pink;
-}
-
-.sumOfLikes,
-.dateOfPost {
-  font-size: 12px;
-  color: grey;
-}
-
-.sumOfLikes {
-  margin-left: 2px;
-}
-
-.dateOfPost {
-  float: right;
-  margin-top: 10px;
-}
-
-.feedContainer {
-  height: 57vh;
-  width: 100%;
-  overflow-y: scroll;
-  overflow-x: hidden;
-}
-
-/* Customized scroll (hide) */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -182,48 +35,6 @@ textarea:focus {
   background: transparent;
 }
 
-/* FOOTER */
-footer {
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-  background-color: black;
-  opacity: 0.6;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.contact {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  margin: 0;
-  padding: 10px;
-  color: white;
-  text-align: center;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.contactMe {
-  margin: 0 0 0 20px;
-  border-radius: 15px;
-  background: transparent;
-  color: white;
-  border: 2px solid white;
-  padding: 10px;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.contactMe:hover {
-  background: white;
-  color: black;
-}
-
-/* RESPONSIVE DEISGN */
 @media (min-width: 667px) {
   h1 {
     font-size: 62px;

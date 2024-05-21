@@ -1,7 +1,21 @@
 import NewThought from "./NewThought";
 import { useAddLikeMutation, useGetThoughtsQuery } from "../api/thoughts";
-import { LoadingSpinner } from "../utils/LoadingSpinner";
+import { SkeletonLoader } from "../utils/SkeletonLoader";
 import { SingleThought } from "./SingleThought";
+import styled from "styled-components";
+
+const LoadingAnimation = () => {
+  return (
+    <LoadingContainer>
+      <SkeletonLoader mode="rectangular" height="180px" width="320px" />
+      <SkeletonLoader mode="rectangular" height="90px" width="320px" />
+      <SkeletonLoader mode="rectangular" height="90px" width="320px" />
+      <SkeletonLoader mode="rectangular" height="90px" width="320px" />
+      <SkeletonLoader mode="rectangular" height="90px" width="320px" />
+      <SkeletonLoader mode="rectangular" height="90px" width="320px" />
+    </LoadingContainer>
+  );
+};
 
 const Feed = () => {
   const { isLoading, isError, data: thoughts } = useGetThoughtsQuery();
@@ -18,23 +32,17 @@ const Feed = () => {
   };
 
   if (isLoading) {
-    return <LoadingSpinner />;
-  }
-
-  if (isError) {
+    return <LoadingAnimation />;
+  } else if (isError) {
     throw new Error("Could not fetch thoughts");
-  }
-
-  if (!thoughts) {
+  } else if (!thoughts) {
     throw new Error("Thoughts is undefined");
   }
 
   return (
-    <>
-      <section>
-        <NewThought />
-      </section>
-      <section className="feedContainer">
+    <Wrapper>
+      <NewThought />
+      <FeedContainer>
         {thoughts.map((thought) => {
           return (
             <SingleThought
@@ -44,9 +52,35 @@ const Feed = () => {
             />
           );
         })}
-      </section>
-    </>
+      </FeedContainer>
+    </Wrapper>
   );
 };
 
 export default Feed;
+
+const LoadingContainer = styled.section`
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+`;
+
+const Wrapper = styled.main`
+  margin: 0 auto;
+  padding: 0;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const FeedContainer = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 10px;
+  height: 57vh;
+  width: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+`;

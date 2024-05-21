@@ -10,9 +10,7 @@ function App() {
     <Provider store={store}>
       <Background />
       <Header />
-      <main>
-        <Feed />
-      </main>
+      <Feed />
       <Footer />
     </Provider>
   );
