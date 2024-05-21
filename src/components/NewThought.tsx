@@ -2,38 +2,38 @@ import { useState } from "react";
 import Confetti from "react-confetti";
 import { useAddThoughtMutation } from "../api/thoughts";
 import styled from "styled-components";
+import { useForm, useWatch } from "react-hook-form";
+
+interface FormValues {
+  message: string;
+}
 
 const NewThought = () => {
-  const initialValue = { message: "" };
-  const [newThought, setNewThought] = useState(initialValue);
+  const {
+    handleSubmit,
+    register,
+    reset,
+    control,
+    formState: { errors },
+    setError,
+  } = useForm<FormValues>({ defaultValues: { message: "" } });
   const [confetti, setConfetti] = useState({ showConfetti: false });
-  const [addThought, { isError }] = useAddThoughtMutation();
+  const [addThought] = useAddThoughtMutation();
 
-  const messageTooShort = newThought.message.length < 5;
-  const messageTooLong = newThought.message.length > 140;
+  const newThought = useWatch({ control, name: "message" });
 
-  const alertText = () => {
-    if (messageTooShort) {
-      return "Oh no! Too short message, needs to be minimum 5 characters";
-    } else if (messageTooLong) {
-      return "Oh no! Too long message, keep it within 140 characters";
-    }
-  };
-
-  const handleAddThought = async (event: { preventDefault: () => void }) => {
-    event.preventDefault();
-    if (messageTooShort || messageTooLong) {
-      alert(alertText());
-      return;
-    }
+  const onSubmit = async (data: FormValues) => {
     try {
-      await addThought(newThought).unwrap();
+      await addThought(data).unwrap();
+      reset();
       setConfetti({ showConfetti: true });
-      setNewThought(initialValue);
       setTimeout(() => setConfetti({ showConfetti: false }), 3000);
     } catch (error) {
-      console.log(isError, error);
-      alert("Oh no! Something went wrong, please try again");
+      console.error(error);
+      setError("message", {
+        type: "custom",
+        message: "Oh no! Something went wrong, please try again",
+      });
     }
   };
 
@@ -41,7 +41,7 @@ const NewThought = () => {
     <section>
       {confetti.showConfetti && <Confetti numberOfPieces={200} />}
       <Wrapper>
-        <form onSubmit={handleAddThought}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <StyledLabel htmlFor="newPost">
             What is making you happy right now?
             <StyledTextArea
@@ -49,12 +49,22 @@ const NewThought = () => {
               placeholder="Type something here.."
               rows={4}
               cols={40}
-              value={newThought.message}
-              onChange={(e) => setNewThought({ message: e.target.value })}
+              {...register("message", {
+                required: true,
+                minLength: {
+                  value: 5,
+                  message: "Your message must be at least 5 characters long",
+                },
+                maxLength: {
+                  value: 140,
+                  message: "Your message can't be longer than 140 characters",
+                },
+              })}
             />
+            <ErrorText>{errors.message?.message}</ErrorText>
           </StyledLabel>
-          <Counter $error={newThought.message.length > 140}>
-            {newThought.message.length} / 140
+          <Counter $length={newThought.length}>
+            {newThought.length} / 140
           </Counter>
           <StyledBtn type="submit">
             <span role="img" aria-label="heart">
@@ -107,10 +117,14 @@ const StyledTextArea = styled.textarea`
   }
 `;
 
-const Counter = styled.p<{ $error: boolean }>`
+const ErrorText = styled.p`
+  color: red;
+`;
+
+const Counter = styled.p<{ $length: number }>`
   position: relative;
   float: right;
-  color: ${(props) => (props.$error ? "red" : "grey")};
+  color: ${(props) => (props.$length > 140 ? "red" : "grey")};
 `;
 
 const StyledBtn = styled.button`

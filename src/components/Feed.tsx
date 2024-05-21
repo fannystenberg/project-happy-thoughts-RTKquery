@@ -6,14 +6,16 @@ import styled from "styled-components";
 
 const LoadingAnimation = () => {
   return (
-    <LoadingContainer>
-      <SkeletonLoader mode="rectangular" height="180px" width="320px" />
-      <SkeletonLoader mode="rectangular" height="90px" width="320px" />
-      <SkeletonLoader mode="rectangular" height="90px" width="320px" />
-      <SkeletonLoader mode="rectangular" height="90px" width="320px" />
-      <SkeletonLoader mode="rectangular" height="90px" width="320px" />
-      <SkeletonLoader mode="rectangular" height="90px" width="320px" />
-    </LoadingContainer>
+    <Wrapper>
+      <FeedContainer>
+        <SkeletonLoader mode="rectangular" height="200px" width="320px" />
+        <SkeletonLoader mode="rectangular" height="100px" width="320px" />
+        <SkeletonLoader mode="rectangular" height="100px" width="320px" />
+        <SkeletonLoader mode="rectangular" height="100px" width="320px" />
+        <SkeletonLoader mode="rectangular" height="100px" width="320px" />
+        <SkeletonLoader mode="rectangular" height="100px" width="320px" />
+      </FeedContainer>
+    </Wrapper>
   );
 };
 
@@ -58,12 +60,6 @@ const Feed = () => {
 };
 
 export default Feed;
-
-const LoadingContainer = styled.section`
-  display: flex;
-  flex-direction: column;
-  row-gap: 12px;
-`;
 
 const Wrapper = styled.main`
   margin: 0 auto;
